@@ -12,6 +12,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatCardModule } from '@angular/material/card'
+import  { MatChipsModule } from '@angular/material/chips'
 
 const routes: Routes = [
   {path: '', component: AssignmentsComponent},
@@ -49,6 +52,9 @@ const routes: Routes = [
     MatToolbarModule,
     MatMenuModule,
     MatButtonModule,
+    DragDropModule,
+    MatCardModule,
+    MatChipsModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

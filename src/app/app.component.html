@@ -1,13 +1,27 @@
 <mat-toolbar color="primary">
-  <span>Gestion des assignments</span>
-  <span class="example-spacer"></span>
-  <button mat-button [matMenuTriggerFor]="menu" aria-label="Utilisateur connecté">Utilisateur</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <mat-icon>logout</mat-icon>
-      <span>Se déconnecter</span>
+  <mat-toolbar-row>
+    <span>Gestion des assignments</span>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="menu" aria-label="Utilisateur connecté">
+      <mat-icon>supervised_user_circle</mat-icon>
+      <span>Utilisateur</span>
     </button>
-  </mat-menu>
-  
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <span>Se déconnecter</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span class="example-spacer"></span>
+    <button mat-raised-button aria-label="Ajouter un assignment">
+      <mat-icon>add</mat-icon>
+      <span>Ajouter un assignment</span>
+    </button>
+  </mat-toolbar-row>
+
 </mat-toolbar>
-<router-outlet></router-outlet>
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

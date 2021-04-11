@@ -1,1 +1,88 @@
-<p>assignments works!</p>
+<div cdkDropListGroup>
+    <div class="example-container">
+        <h2>Non rendus</h2>
+
+        <div cdkDropList [cdkDropListData]="nonRendus" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of nonRendus" cdkDrag>
+                <mat-card class="example-card">
+                    <div class="flex-container">
+
+                        <div>
+                            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Image de la matière">
+                        </div>
+                        <div style="flex-grow: 1; align-self: center; margin: 20px;">
+                            <p>Nom de la matière</p>
+                            <p>Date</p>
+                        </div>
+
+                        <div style="flex-grow: 1; text-align: right;">
+                            <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Photo du professeur">
+                            <div>Professeur: Nom du professeur</div>
+                        </div>
+                    </div>
+                    <div class="flex-container">
+                        <div style="flex-grow: 1; align-self: center;">
+                            Etudiant: John Doe
+                        </div>
+                    </div>
+                    <mat-card-actions style="text-align: right;">
+                        <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="example-container">
+        <h2>Rendus</h2>
+
+        <div cdkDropList [cdkDropListData]="rendus" class="example-list" (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let item of rendus" cdkDrag>
+                <mat-card class="example-card">
+                    <div class="flex-container">
+
+                        <div>
+                            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Image de la matière">
+                        </div>
+                        <div style="flex-grow: 1; align-self: center; margin: 20px;">
+                            <p>Nom de la matière</p>
+                            <p>Date</p>
+                        </div>
+
+                        <div style="flex-grow: 1; text-align: right;">
+                            <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Photo du professeur">
+                            <div>Professeur: Nom du professeur</div>
+                        </div>
+                    </div>
+                    <div class="flex-container">
+                        <div style="flex-grow: 1; align-self: center;">
+                            Etudiant: John Doe
+                        </div>
+                        <div style="flex-grow: 1; align-self: center; text-align: right;">
+                           Note: 14/20
+                        </div>
+                    </div>
+                    <mat-card-actions style="text-align: right;">
+                        <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </div>
+
+        </div>
+    </div>
+</div>
