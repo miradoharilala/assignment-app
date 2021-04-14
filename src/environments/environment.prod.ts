@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUri: "https://assignment-app-api.herokuapp.com/api"
 };
