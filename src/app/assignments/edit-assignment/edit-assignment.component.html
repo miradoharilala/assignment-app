@@ -1,1 +1,65 @@
-<p>edit-assignment works!</p>
+<mat-card>
+
+    <mat-card-title><h2>Ajouter un nouvel assignment</h2></mat-card-title>
+    <section class="add-container">
+      
+      <form class="example-form">
+        <span class="flex-container">
+          <mat-form-field class="example-full-width">
+            <mat-label>Matiere</mat-label>
+            <input matInput aria-label="Matières" [matAutocomplete]="auto" [formControl]="matieresCtrl">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)='changeMatiere($event.option.value)' [displayWith]="getNomMatiere">
+              <mat-option *ngFor="let matiere of filteredMatieres | async" [value]="matiere" (ngModel)="assignment.matiere">
+                <img class="example-option-img" mat-card-sm-image aria-hidden [src]="matiere.image" height="25">
+                <span>{{matiere.nom}}</span> |
+                <small>Enseigné par: {{ matiere.professeur.nom }}</small>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+    
+    
+    
+          <mat-form-field class="example-full-width" style="margin-left: 20px;">
+            <mat-label>Date de rendu</mat-label>
+            <input name="dateDeRendu" matInput [matDatepicker]="picker" [(ngModel)]="assignment.dateDeRendu">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </span>
+    
+        <span class="flex-container">
+          <mat-form-field class="example-full-width">
+            <mat-label>Eleve</mat-label>
+            <input matInput aria-label="Eleves" [matAutocomplete]="eleveMat" [formControl]="elevesCtrl" >
+            <mat-autocomplete #eleveMat="matAutocomplete" (optionSelected)='changeEleve($event.option.value)' [displayWith]="getNomEleve">
+              <mat-option *ngFor="let eleve of filteredEleves"  [value]="eleve">
+                <span>{{ eleve.nom}}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+  
+          <mat-checkbox name="rendu" style="align-self: center; text-align: center;" class="example-full-width" [(ngModel)]="assignment.rendu">Rendu</mat-checkbox>
+  
+          <mat-form-field style="align-self: center;" class="example-full-width">
+            <mat-label>Note</mat-label>
+            <input name="note" matInput type="number" max="20" min="0" [(ngModel)]="assignment.note">
+          </mat-form-field>
+          
+        </span>
+    
+    
+    
+        <mat-form-field class="example-full-width">
+          <mat-label>Remarque</mat-label>
+          <textarea name="remarque" matInput rows="5" [(ngModel)]="assignment.remarque"></textarea>
+        </mat-form-field>
+    
+    
+      </form>
+    </section>
+    <mat-card-actions style="text-align: right;">
+        
+      <button mat-raised-button routerLink="/home" >{{ boutonRetour }}</button>
+      <button mat-raised-button (click)="modifier()" [disabled]="disableSaveButton">Modifier</button>
+    </mat-card-actions>
+  </mat-card>

@@ -7,6 +7,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
+import { LoggingService } from '../shared/logging.service';
 
 @Component({
   selector: 'app-assignments',
@@ -53,7 +54,8 @@ export class AssignmentsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ngZone: NgZone,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private loggingService: LoggingService
   ) { }
 
   ngOnInit(): void {
@@ -154,14 +156,10 @@ export class AssignmentsComponent implements OnInit {
   }
 
 
-  onClickEdit(assignment: Assignment) {
+  onClickEdit(assignment) {
     this.router.navigate(['/assignment', assignment.id, 'edit'], {
-      queryParams: {
-        nom: 'Michel Buffa',
-        metier: "Professeur",
-        responsable: "MIAGE"
-      },
-      fragment: "edition"
+
+      fragment:"edition"
     });
   }
 
@@ -202,13 +200,7 @@ export class AssignmentsComponent implements OnInit {
       + assignment.matiere.nom + " du " + assignment.dateDeRendu
     )) {
       this.assignmentsService.deleteAssignment(assignment).subscribe((message) => {
-        // if(estRendu) {
-        //   let index = this.assignmentsRendus.indexOf(assignment);
-        //   this.assignmentsRendus.splice(index, 1);
-        // } else {
-        //   let index = this.assignmentsNonRendus.indexOf(assignment);
-        //   this.assignmentsNonRendus.splice(index, 1);
-        // }
+        this.loggingService.notifier('Assignment supprimé');
       });
     }
 

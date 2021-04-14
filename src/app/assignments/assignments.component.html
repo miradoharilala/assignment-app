@@ -32,7 +32,7 @@
                                 aria-label="Voir l'assignment">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                            <button mat-stroked-button color="primary" (click)="onClickEdit(assignment)" aria-label="Modifier l'assignment">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button (click)="onDeleteAssignment(assignment)" mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
@@ -85,7 +85,7 @@
                                 aria-label="Supprimer l'assignment">
                                 <mat-icon>visibility</mat-icon>
                             </button>
-                            <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                            <button mat-stroked-button color="primary" (click)="onClickEdit(assignment)" aria-label="Modifier l'assignment">
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button (click)="onDeleteAssignment(assignment)" mat-stroked-button color="warn" aria-label="Supprimer l'assignment">

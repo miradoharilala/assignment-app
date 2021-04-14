@@ -8,6 +8,8 @@ import { AssignmentsService } from 'src/app/shared/assignments.service';
 import { Assignment } from '../assignment.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoggingService } from 'src/app/shared/logging.service';
 
 @Component({
   selector: 'app-add-assignment',
@@ -24,7 +26,7 @@ export class AddAssignmentComponent implements OnInit {
   matieres: Matiere[] = [];
 
 
-  constructor(private service: AssignmentsService, private http: HttpClient) {
+  constructor(private service: AssignmentsService, private http: HttpClient, private router: Router, private loggingService: LoggingService) {
     this.service.getMatieres('').subscribe((data) => {
       this.matieres = data;
     });
@@ -33,10 +35,12 @@ export class AddAssignmentComponent implements OnInit {
   }
 
 
-  private _filterStates(value: string): Matiere[] {
+  private _filterMatieres(value: string): Matiere[] {
+    if(typeof value === "string") {
     const filterValue = value.toLowerCase();
 
     return this.matieres.filter(matiere => matiere.nom.toLowerCase().indexOf(filterValue) === 0 || matiere.professeur.nom.toLowerCase().indexOf(filterValue) === 0);
+    }
   }
 
 
@@ -44,7 +48,7 @@ export class AddAssignmentComponent implements OnInit {
     this.filteredMatieres = this.matieresCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(matiere => matiere ? this._filterStates(matiere) : this.matieres.slice())
+        map(matiere => matiere ? this._filterMatieres(matiere) : this.matieres.slice())
       );
 
     this.elevesCtrl.valueChanges
@@ -55,7 +59,9 @@ export class AddAssignmentComponent implements OnInit {
           this.filteredEleves = [];
           // this.isLoading = true;
         }),
-        switchMap(value => this.http.get( environment.baseUri + '/eleves?key=' + value)
+        switchMap((value) => 
+          this.http.get( environment.baseUri + '/eleves?key=' + value
+        )
           .pipe(
             finalize(() => {
               // this.isLoading = false
@@ -75,4 +81,31 @@ export class AddAssignmentComponent implements OnInit {
       });
   }
 
+  changeMatiere(event) {
+    this.assignment.matiere = event;
+  }
+
+  getNomMatiere(matiere) {
+    if(matiere) return matiere.nom;
+  }
+
+  changeEleve(event) {
+    this.assignment.eleve = event;
+  }
+
+  getNomEleve(eleve) {
+    if(eleve) return eleve.nom;
+  }
+
+  ajouter() {
+    this.service.addAssignment(this.assignment)
+      .subscribe(reponse => {
+        console.log(reponse.message);
+
+         // et on navigue vers la page d'accueil qui affiche la liste
+         this.router.navigate(["/home"]);
+         this.loggingService.notifier('Nouvel assignment ajouté');
+         
+      });
+  }
 }
