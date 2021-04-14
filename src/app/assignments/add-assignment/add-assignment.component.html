@@ -1,1 +1,63 @@
-<p>add-assignment works!</p>
+<mat-card>
+
+  <mat-card-title><h2>Ajouter un nouvel assignment</h2></mat-card-title>
+  <section class="add-container">
+    
+    <form class="example-form">
+      <span class="flex-container">
+        <mat-form-field class="example-full-width">
+          <mat-label>Matiere</mat-label>
+          <input matInput aria-label="Matières" [matAutocomplete]="auto" [formControl]="matieresCtrl">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let matiere of filteredMatieres | async" [value]="matiere.nom">
+              <img class="example-option-img" mat-card-sm-image aria-hidden [src]="matiere.image" height="25">
+              <span>{{matiere.nom}}</span> |
+              <small>Enseigné par: {{ matiere.professeur.nom }}</small>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+  
+  
+  
+        <mat-form-field class="example-full-width" style="margin-left: 20px;">
+          <mat-label>Date de rendu</mat-label>
+          <input matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </span>
+  
+      <span class="flex-container">
+        <mat-form-field class="example-full-width">
+          <mat-label>Eleve</mat-label>
+          <input matInput aria-label="Eleves" [matAutocomplete]="eleveMat" [formControl]="elevesCtrl" >
+          <mat-autocomplete #eleveMat="matAutocomplete" >
+            <mat-option *ngFor="let eleve of filteredEleves" [value]="eleve.nom">
+              <span>{{ eleve.nom}}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-checkbox style="align-self: center; text-align: center;" class="example-full-width">Rendu</mat-checkbox>
+
+        <mat-form-field style="align-self: center;" class="example-full-width">
+          <mat-label>Note</mat-label>
+          <input matInput type="number" max="20" min="0">
+        </mat-form-field>
+        
+      </span>
+  
+  
+  
+      <mat-form-field class="example-full-width">
+        <mat-label>Remarque</mat-label>
+        <textarea matInput rows="5"></textarea>
+      </mat-form-field>
+  
+  
+    </form>
+  </section>
+  <mat-card-actions style="text-align: right;">
+    <button mat-raised-button>Ajouter un assignment</button>
+  </mat-card-actions>
+</mat-card>

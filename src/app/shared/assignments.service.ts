@@ -5,6 +5,7 @@ import { catchError, filter, map, tap } from 'rxjs/operators';
 import { Assignment } from '../assignments/assignment.model';
 import { LoggingService } from './logging.service';
 import { environment } from '../../environments/environment';
+import { Matiere } from '../assignments/matiere.model';
 // import { assignmentsGeneres } from './data';
 
 @Injectable({
@@ -22,6 +23,12 @@ export class AssignmentsService {
     console.log("Dans le service de gestion des assignments...")
     //return of(this.assignments);
     return this.http.get<Assignment[]>(this.uri);
+  }
+
+  getMatieres(key):Observable<Matiere[]> {
+    console.log("Dans le service de gestion des matieres...")
+    //return of(this.assignments);
+    return this.http.get<Matiere[]>(this.baseUri + '/matieres?key='+key);
   }
 
   getAssignmentsPagine(page:number, limit:number, rendu:Boolean):Observable<any> {
