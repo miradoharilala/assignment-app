@@ -1,5 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { AssignmentsService } from '../shared/assignments.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Assignment } from './assignment.model';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
+import {MatDialog} from '@angular/material/dialog';
+import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 
 @Component({
   selector: 'app-assignments',
@@ -8,35 +15,203 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag
 })
 export class AssignmentsComponent implements OnInit {
 
-  rendus = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
-  ];
+  @ViewChild('scrollerRendus') scrollerRendus: CdkVirtualScrollViewport;
+  @ViewChild('scrollerNonRendus') scrollerNonRendus: CdkVirtualScrollViewport;
 
-  nonRendus = [
-    'Get up',
-    'Brush teeth',
-    'Take a shower',
-    'Check e-mail',
-    'Walk dog'
-  ];
+  assignmentsRendus: Assignment[];
+  assignmentsNonRendus: Assignment[];
+  pageRendu: number = 1;
+  pageNonRendu: number = 1;
+  limit: number = 10;
+  totalDocsRendu: number;
+  totalDocsNonRendu: number;
+  totalPagesRendu: number;
+  totalPagesNonRendu: number;
+  hasPrevPageRendu: boolean;
+  hasPrevPageNonRendu: boolean;
+  prevPageRendu: number;
+  prevPageNonRendu: number;
+  hasNextPageRendu: boolean;
+  hasNextPageNonRendu: boolean;
+  nextPageRendu: number;
+  nextPageNonRendu: number;
+  loading = false;
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
 
-  constructor() { }
+  constructor(
+    private assignmentsService: AssignmentsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private ngZone: NgZone,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe((queryParams) => {
+      this.getAssignments(false);
+      this.getAssignments(true);
+    });
+  }
+
+  getPlusDAssignmentsPourScrolling(rendu: Boolean) {
+    const page = rendu ? this.pageRendu : this.pageNonRendu;
+    this.loading = true;
+    this.assignmentsService
+      .getAssignmentsPagine(page, this.limit, rendu)
+      .subscribe((data) => {
+        this.loading = false;
+        // au lieu de remplacer this.assignments par les nouveaux assignments récupérés
+        // on va les ajouter à ceux déjà présents...
+        if (rendu) {
+          this.assignmentsRendus = this.assignmentsRendus.concat(data.docs);
+          this.pageRendu = data.page;
+          this.limit = data.limit;
+          this.totalDocsRendu = data.totalDocs;
+          this.totalPagesRendu = data.totalPages;
+          this.hasPrevPageRendu = data.hasPrevPage;
+          this.prevPageRendu = data.prevPage;
+          this.hasNextPageRendu = data.hasNextPage;
+          this.nextPageRendu = data.nextPage;
+        } else {
+          this.assignmentsNonRendus = this.assignmentsNonRendus.concat(data.docs);
+          this.pageNonRendu = data.page;
+          this.limit = data.limit;
+          this.totalDocsNonRendu = data.totalDocs;
+          this.totalPagesNonRendu = data.totalPages;
+          this.hasPrevPageNonRendu = data.hasPrevPage;
+          this.prevPageNonRendu = data.prevPage;
+          this.hasNextPageNonRendu = data.hasNextPage;
+          this.nextPageNonRendu = data.nextPage;
+        }
+        // this.assignments = [...this.assignments, ...data.docs];
+
+        console.log("données reçues");
+      });
+  }
+
+  ngAfterViewInit() {
+    // Appelé automatiquement après l'affichage, donc l'élément scroller aura
+    // et affiché et ne vaudra pas "undefined" (ce qui aurait été le cas dans ngOnInit)
+
+    // On va s'abonner aux évenements de scroll sur le scrolling...
+    this.scroll(this.scrollerRendus);
+    this.scroll(this.scrollerNonRendus);
+  }
+
+  scroll(scroller: CdkVirtualScrollViewport) {
+    scroller
+      .elementScrolled()
+      .pipe(
+        map((event) => {
+          return scroller.measureScrollOffset("bottom");
+        }),
+        pairwise(),
+        /*
+        tap(([y1, y2]) => {
+          if(y2 < y1) {
+            console.log("ON SCROLLE VERS LE BAS !")
+          } else {
+            console.log("ON SCROLLE VERS LE HAUT !")
+          }
+        }),
+        */
+        filter(([y1, y2]) => y2 < y1 && y2 < 200),
+        throttleTime(200) // on ne va en fait envoyer le dernier événement que toutes les 200ms.
+        // on va ignorer tous les évéments arrivés et ne garder que le dernier toutes
+        // les 200ms
+      )
+      .subscribe((dist) => {
+        this.ngZone.run(() => {
+          if(scroller === this.scrollerRendus) {
+            if (this.hasNextPageRendu) {
+              this.pageRendu = this.nextPageRendu;
+              console.log(
+                "Je charge de nouveaux assignments page = " + this.pageRendu
+              );
+              this.getPlusDAssignmentsPourScrolling(true);
+            }
+          } if(scroller === this.scrollerNonRendus) {
+            if (this.hasNextPageNonRendu) {
+              this.pageNonRendu = this.nextPageNonRendu;
+              console.log(
+                "Je charge de nouveaux assignments page = " + this.pageNonRendu
+              );
+              this.getPlusDAssignmentsPourScrolling(false);
+            }
+          }
+        });
+      });
+  }
+
+
+  onClickEdit(assignment: Assignment) {
+    this.router.navigate(['/assignment', assignment.id, 'edit'], {
+      queryParams: {
+        nom: 'Michel Buffa',
+        metier: "Professeur",
+        responsable: "MIAGE"
+      },
+      fragment: "edition"
+    });
+  }
+
+  getAssignments(rendu: Boolean) {
+    const page = rendu ? this.pageRendu : this.pageNonRendu;
+    this.assignmentsService
+      .getAssignmentsPagine(page, this.limit, rendu)
+      .subscribe((data) => {
+        rendu ? this.assignmentsRendus = data.docs : this.assignmentsNonRendus = data.docs;
+        if (rendu) {
+          this.pageRendu = data.page;
+          this.limit = data.limit;
+          this.totalDocsRendu = data.totalDocs;
+          this.totalPagesRendu = data.totalPages;
+          this.hasPrevPageRendu = data.hasPrevPage;
+          this.prevPageRendu = data.prevPage;
+          this.hasNextPageRendu = data.hasNextPage;
+          this.nextPageRendu = data.nextPage;
+        } else {
+          this.pageNonRendu = data.page;
+          this.limit = data.limit;
+          this.totalDocsNonRendu = data.totalDocs;
+          this.totalPagesNonRendu = data.totalPages;
+          this.hasPrevPageNonRendu = data.hasPrevPage;
+          this.prevPageNonRendu = data.prevPage;
+          this.hasNextPageNonRendu = data.hasNextPage;
+          this.nextPageNonRendu = data.nextPage;
+        }
+        console.log("données reçues");
+      });
+  }
+
+
+  onDeleteAssignment(event) {
+    // event = l'assignment à supprimer
+
+    //this.assignments.splice(index, 1);
+    this.assignmentsService.deleteAssignment(event).subscribe((message) => {
+      console.log(message);
+    });
+  }
+
+  openDialog(assignment) {
+  const dialogRef = this.dialog.open(AssignmentDetailComponent, {
+    data: assignment
+  });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

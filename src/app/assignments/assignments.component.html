@@ -2,87 +2,103 @@
     <div class="example-container">
         <h2>Non rendus</h2>
 
-        <div cdkDropList [cdkDropListData]="nonRendus" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of nonRendus" cdkDrag>
-                <mat-card class="example-card">
-                    <div class="flex-container">
+        <cdk-virtual-scroll-viewport #scrollerNonRendus itemSize="50" class="example-list">
+            <div cdkDropList [cdkDropListData]="assignmentsNonRendus" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsNonRendus" cdkDrag>
+                    <mat-card class="example-card">
+                        <div class="flex-container">
 
-                        <div>
-                            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                                alt="Image de la matière">
-                        </div>
-                        <div style="flex-grow: 1; align-self: center; margin: 20px;">
-                            <p>Nom de la matière</p>
-                            <p>Date</p>
-                        </div>
+                            <div>
+                                <img mat-card-sm-image [src]="assignment.matiere.image" alt="Image de la matière">
+                            </div>
+                            <div style="flex-grow: 1; align-self: center; margin: 20px;">
+                                <p>{{ assignment.matiere.nom }}</p>
+                                <p mat-subheader>{{assignment.dateDeRendu | date}}</p>
+                            </div>
 
-                        <div style="flex-grow: 1; text-align: right;">
-                            <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                                alt="Photo du professeur">
-                            <div>Professeur: Nom du professeur</div>
+                            <div style="flex-grow: 1; text-align: right;">
+                                <img mat-card-avatar [src]="assignment.matiere.professeur.photo"
+                                    alt="Photo du professeur">
+                                <div>Professeur: {{ assignment.matiere.professeur.nom }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-container">
-                        <div style="flex-grow: 1; align-self: center;">
-                            Etudiant: John Doe
+                        <div class="flex-container">
+                            <div style="flex-grow: 1; align-self: center;">
+                                Etudiant: {{ assignment.eleve.nom }}
+                            </div>
                         </div>
-                    </div>
-                    <mat-card-actions style="text-align: right;">
-                        <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-card-actions>
-                </mat-card>
+                        <mat-card-actions style="text-align: right;">
+                            <button (click)="openDialog(assignment)" mat-stroked-button color="primary"
+                                aria-label="Voir l'assignment">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div class="spinner-item">
+                    <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50">
+                    </mat-progress-spinner>
+                </div>
             </div>
-
-        </div>
+        </cdk-virtual-scroll-viewport>
     </div>
 
     <div class="example-container">
         <h2>Rendus</h2>
 
-        <div cdkDropList [cdkDropListData]="rendus" class="example-list" (cdkDropListDropped)="drop($event)">
-            <div class="example-box" *ngFor="let item of rendus" cdkDrag>
-                <mat-card class="example-card">
-                    <div class="flex-container">
+        <cdk-virtual-scroll-viewport #scrollerRendus itemSize="50" class="example-list">
+            <div cdkDropList [cdkDropListData]="assignmentsRendus" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsRendus" cdkDrag>
+                    <mat-card class="example-card">
+                        <div class="flex-container">
 
-                        <div>
-                            <img mat-card-sm-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                                alt="Image de la matière">
-                        </div>
-                        <div style="flex-grow: 1; align-self: center; margin: 20px;">
-                            <p>Nom de la matière</p>
-                            <p>Date</p>
-                        </div>
+                            <div>
+                                <img mat-card-sm-image [src]="assignment.matiere.image" alt="Image de la matière">
+                            </div>
+                            <div style="flex-grow: 1; align-self: center; margin: 20px;">
+                                <p>{{ assignment.matiere.nom }}</p>
+                                <p mat-subheader>{{assignment.dateDeRendu | date}}</p>
+                            </div>
 
-                        <div style="flex-grow: 1; text-align: right;">
-                            <img mat-card-avatar src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                                alt="Photo du professeur">
-                            <div>Professeur: Nom du professeur</div>
+                            <div style="flex-grow: 1; text-align: right;">
+                                <img mat-card-avatar [src]="assignment.matiere.professeur.photo"
+                                    alt="Photo du professeur">
+                                <div>Professeur: {{ assignment.matiere.professeur.nom }}</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex-container">
-                        <div style="flex-grow: 1; align-self: center;">
-                            Etudiant: John Doe
+                        <div class="flex-container">
+                            <div style="flex-grow: 1; align-self: center;">
+                                Etudiant: {{ assignment.eleve.nom }}
+                            </div>
+                            <div style="flex-grow: 1; align-self: center; text-align: right;">
+                                Note: {{ assignment.note }}/20
+                            </div>
                         </div>
-                        <div style="flex-grow: 1; align-self: center; text-align: right;">
-                           Note: 14/20
-                        </div>
-                    </div>
-                    <mat-card-actions style="text-align: right;">
-                        <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
-                            <mat-icon>edit</mat-icon>
-                        </button>
-                        <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </mat-card-actions>
-                </mat-card>
+                        <mat-card-actions style="text-align: right;">
+                            <button (click)="openDialog(assignment)" mat-stroked-button color="primary"
+                                aria-label="Supprimer l'assignment">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div class="spinner-item">
+                    <mat-progress-spinner [mode]="'indeterminate'" [diameter]="50">
+                    </mat-progress-spinner>
+                </div>
             </div>
-
-        </div>
+        </cdk-virtual-scroll-viewport>
     </div>
 </div>

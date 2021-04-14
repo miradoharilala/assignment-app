@@ -1,1 +1,43 @@
-<p>assignment-detail works!</p>
+<div mat-dialog-title>
+    <div class="flex-container">
+        <div style="text-align: left;">
+            <img mat-card-sm-image [src]="assignment.matiere.image" alt="Image de la matière">
+        </div>
+        <div style="flex-grow: 1; align-self: center; margin: 20px;">
+            <mat-card-title>{{ assignment.matiere.nom }}</mat-card-title>
+            <mat-card-subtitle>Enseigné par: {{ assignment.matiere.professeur.nom }}</mat-card-subtitle>
+        </div>
+    </div>
+</div>
+<mat-dialog-content class="mat-typography">
+    <div>
+        <table class="mat-table" style="text-align: left;">
+            <tr class="mat-row">
+                <th class="mat-header-cell">Date: </th>
+                <td class="mat-cell">{{ assignment.dateDeRendu | date }}</td>
+            </tr>
+            <tr class="mat-row">
+                <th class="mat-header-cell">Etudiant: </th>
+                <td class="mat-cell">{{ assignment.eleve.nom }}</td>
+            </tr>
+            <tr class="mat-row">
+                <th class="mat-header-cell">Note: </th>
+                <td class="mat-cell">{{ assignment.note }}/20</td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Remarque</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p>{{ assignment.remarque }}</p>
+        </mat-card-content>
+    </mat-card>
+    <br>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Fermer</button>
+    <button mat-button [mat-dialog-close]="true" (click)="onClickEdit()" cdkFocusInitial>Modifier</button>
+</mat-dialog-actions>

@@ -15,6 +15,12 @@ import { RouterModule, Routes } from '@angular/router';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card'
 import  { MatChipsModule } from '@angular/material/chips'
+import { HttpClientModule } from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider'
+import { MatTableModule } from '@angular/material/table'
 
 const routes: Routes = [
   {path: '', component: AssignmentsComponent},
@@ -55,7 +61,10 @@ const routes: Routes = [
     DragDropModule,
     MatCardModule,
     MatChipsModule,
-    RouterModule.forRoot(routes)
+    MatProgressSpinnerModule,
+    RouterModule.forRoot(routes),
+    HttpClientModule, ScrollingModule, MatDialogModule, MatDividerModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]
