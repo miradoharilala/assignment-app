@@ -35,7 +35,7 @@
                             <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                            <button (click)="onDeleteAssignment(assignment)" mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-card-actions>
@@ -88,7 +88,7 @@
                             <button mat-stroked-button color="primary" aria-label="Modifier l'assignment">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
+                            <button (click)="onDeleteAssignment(assignment)" mat-stroked-button color="warn" aria-label="Supprimer l'assignment">
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </mat-card-actions>

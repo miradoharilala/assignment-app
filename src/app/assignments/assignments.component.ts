@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Assignment } from './assignment.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 
 @Component({
@@ -18,8 +18,8 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild('scrollerRendus') scrollerRendus: CdkVirtualScrollViewport;
   @ViewChild('scrollerNonRendus') scrollerNonRendus: CdkVirtualScrollViewport;
 
-  assignmentsRendus: Assignment[];
-  assignmentsNonRendus: Assignment[];
+  assignmentsRendus: Assignment[] = [];
+  assignmentsNonRendus: Assignment[] = [];
   pageRendu: number = 1;
   pageNonRendu: number = 1;
   limit: number = 10;
@@ -58,8 +58,8 @@ export class AssignmentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
-      this.getAssignments(false);
-      this.getAssignments(true);
+      this.getPlusDAssignmentsPourScrolling(false);
+      this.getPlusDAssignmentsPourScrolling(true);
     });
   }
 
@@ -132,7 +132,7 @@ export class AssignmentsComponent implements OnInit {
       )
       .subscribe((dist) => {
         this.ngZone.run(() => {
-          if(scroller === this.scrollerRendus) {
+          if (scroller === this.scrollerRendus) {
             if (this.hasNextPageRendu) {
               this.pageRendu = this.nextPageRendu;
               console.log(
@@ -140,7 +140,7 @@ export class AssignmentsComponent implements OnInit {
               );
               this.getPlusDAssignmentsPourScrolling(true);
             }
-          } if(scroller === this.scrollerNonRendus) {
+          } if (scroller === this.scrollerNonRendus) {
             if (this.hasNextPageNonRendu) {
               this.pageNonRendu = this.nextPageNonRendu;
               console.log(
@@ -195,19 +195,29 @@ export class AssignmentsComponent implements OnInit {
   }
 
 
-  onDeleteAssignment(event) {
+  onDeleteAssignment(assignment: Assignment) {
     // event = l'assignment à supprimer
+    const estRendu = assignment.rendu;
+    if (confirm("Êtes-vous sûr de supprimer l'assignment de l'élève " + assignment.eleve.nom + " sur la matière "
+      + assignment.matiere.nom + " du " + assignment.dateDeRendu
+    )) {
+      this.assignmentsService.deleteAssignment(assignment).subscribe((message) => {
+        // if(estRendu) {
+        //   let index = this.assignmentsRendus.indexOf(assignment);
+        //   this.assignmentsRendus.splice(index, 1);
+        // } else {
+        //   let index = this.assignmentsNonRendus.indexOf(assignment);
+        //   this.assignmentsNonRendus.splice(index, 1);
+        // }
+      });
+    }
 
-    //this.assignments.splice(index, 1);
-    this.assignmentsService.deleteAssignment(event).subscribe((message) => {
-      console.log(message);
-    });
   }
 
   openDialog(assignment) {
-  const dialogRef = this.dialog.open(AssignmentDetailComponent, {
-    data: assignment
-  });
+    const dialogRef = this.dialog.open(AssignmentDetailComponent, {
+      data: assignment
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
