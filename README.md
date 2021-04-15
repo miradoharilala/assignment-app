@@ -17,7 +17,6 @@ Assignments
     Liste des assignments: scroll infini
     Notation des assignments avec la Fonctionalité Drag and Drop
     Ajout d'un assignment
-
     Modification d'un assignment
     Suppression d'un assignment
         On a implémenté des input qui s'autocomplètent avec la liste des matières et professeurs dans la base de données
