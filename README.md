@@ -1,27 +1,79 @@
-# Assignment
+# assignment-app
+Liste des assignments - Groupe 29
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
+C'est une web app qui permet de gérer les assignments.
 
-## Development server
+Liste des fonctionnalités:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Login
+    Authentification par email et mot de passe
+    Création de token valable pendant 24 heures
+    Les utilisateurs non authentifiés ne peuvent pas accéder à la liste des assignments
 
-## Code scaffolding
+Logout
+    Suppression de token
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Assignments
+    Liste des assignments
+    Ajout d'un assignment
+    Modification d'un assignment
+    Suppression d'un assignment
 
-## Build
+API REST
+    Liste des assignments
+    Ajout d'un assignment
+    Modification d'un assignment
+    Suppression d'un assignment
+    Création d'un utilisateur 
+    Login d'un utilisateur
+    Déconnexion d'un utilisateur
+    Détail d'un assignment
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Base de données: Nous avons utilisé MongoDB pour la gestion des données. Nous avons utilisé les services de mongodb.com
 
-## Running unit tests
+Cette plateforme est déployée sur heroku et est accessible à partir des liens suivants: 
+Front end:
+    https://assignment-app-front.herokuapp.com/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Back end (API Rest):
+    http://assignment-app-api.herokuapp.com/api/assignments
+    http://assignment-app-api.herokuapp.com/api/utilisateurs
+    http://assignment-app-api.herokuapp.com/api/matieres
+    http://assignment-app-api.herokuapp.com/api/eleves
+    http://assignment-app-api.herokuapp.com/api/assignments/{id}
 
-## Running end-to-end tests
+Pour une utilisation locale, voici les instructions:
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Il faut installer au préalable:
+    Télecharger https://nodejs.org/en/download/ et installer
+    Installer angular: ouvrir l'invite de commandes et lancer npm install -g @angular/cli
 
-## Further help
+Back end (node): 
+    Cloner ce repository : https://github.com/miradoharilala/assignment-api.git
+    Aller vers le dossier pour lancer l'invite de commande 
+    Prendre les dernières modifications en faisant un pull request: git pull
+    Installer les modules dont on a besoin en lançant: npm install
+    Lancer le serveur: node server.js
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Front end (angular): 
+    Cloner ce repository : https://github.com/miradoharilala/assignment-app.git
+    Aller vers le dossier pour lancer l'invite de commande 
+    Prendre les dernières modifications en faisant un pull request: git pull
+    Installer les modules dont on a besoin en lançant: npm install
+    Lancer le serveur: ng serve --open
+
+La plateforme s'ouvrira dans le navigateur: http://localhost/4200/
+
+Les webservices:
+    http://localhost/8010/api/assignments
+    http://localhost/8010/utilisateurs
+    http://localhost/8010/matieres
+    http://localhost/8010/api/eleves
+    http://localhost/8010/api/assignments/{id}
+    http://localhost/8010/api/authentification
+
+Améliorations qu'on pourrait ajouter à l'avenir: 
+- Gestion des matières, des professeurs et des élèves
+- Recherche dynamique des assignments
+- Rôle admin
+ 
