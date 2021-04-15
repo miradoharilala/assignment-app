@@ -59,10 +59,14 @@ export class AssignmentsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe((queryParams) => {
-      this.getPlusDAssignmentsPourScrolling(false);
-      this.getPlusDAssignmentsPourScrolling(true);
-    });
+    this.loadData();
+  }
+
+  loadData() {
+    this.assignmentsNonRendus = [];
+    this.assignmentsRendus = [];
+    this.getPlusDAssignmentsPourScrolling(false);
+    this.getPlusDAssignmentsPourScrolling(true);
   }
 
   getPlusDAssignmentsPourScrolling(rendu: Boolean) {
@@ -200,6 +204,7 @@ export class AssignmentsComponent implements OnInit {
       + assignment.matiere.nom + " du " + assignment.dateDeRendu
     )) {
       this.assignmentsService.deleteAssignment(assignment).subscribe((message) => {
+        this.loadData();
         this.loggingService.notifier('Assignment supprimé');
       });
     }
