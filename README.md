@@ -43,7 +43,7 @@ C'est une web app qui permet de gérer les assignments.
     
 - Front end:
     - https://assignment-app-front.herokuapp.com/
-    - Vidéo de présentation
+    - Vidéo de présentation: https://youtu.be/SXkoXPBZbP0
 
 - Back end (API Rest):
     - http://assignment-app-api.herokuapp.com/api/assignments
