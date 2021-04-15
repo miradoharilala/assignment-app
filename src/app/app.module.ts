@@ -15,7 +15,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { MatCardModule } from '@angular/material/card'
 import  { MatChipsModule } from '@angular/material/chips'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -31,6 +31,9 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { LoginComponent } from './login/login.component';
+// import { pathToFileURL } from 'node:url';
+import { JwtInterceptor } from '@auth0/angular-jwt';
+
 
 
 
@@ -51,8 +54,13 @@ const routes: Routes = [
   },
   {
     path:"assignment/:id/edit",
-    component: EditAssignmentComponent,
+    component: EditAssignmentComponent
+  },
+  {
+    path:"login",
+    component: LoginComponent
   }
+  
 ];
 
 @NgModule({
@@ -90,7 +98,10 @@ const routes: Routes = [
     MatSnackBarModule
   ],
   providers: [
-    MatDatepickerModule
+    MatDatepickerModule,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

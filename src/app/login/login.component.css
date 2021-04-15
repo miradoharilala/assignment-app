@@ -1,0 +1,14 @@
+.card{
+    display:block;
+    margin:auto;
+    background-color: white;
+    color:black;
+}
+
+.card-header{
+    background-color: blue;
+}
+
+.card-body{
+    
+}
