@@ -35,6 +35,9 @@ import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from '@auth0/angular-jwt';
 
 
+import { NoteAssignmentComponent } from './assignments/note-assignment/note-assignment.component';
+
+
 
 
 const routes: Routes = [
@@ -60,7 +63,6 @@ const routes: Routes = [
     path:"login",
     component: LoginComponent
   }
-  
 ];
 
 @NgModule({
@@ -70,7 +72,8 @@ const routes: Routes = [
     AddAssignmentComponent,
     EditAssignmentComponent,
     AssignmentDetailComponent,
-    LoginComponent
+    LoginComponent,
+    NoteAssignmentComponent
   ],
   imports: [
     BrowserModule,

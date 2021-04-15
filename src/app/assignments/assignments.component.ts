@@ -8,6 +8,7 @@ import { filter, map, pairwise, throttleTime } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignmentDetailComponent } from './assignment-detail/assignment-detail.component';
 import { LoggingService } from '../shared/logging.service';
+import { NoteAssignmentComponent } from './note-assignment/note-assignment.component';
 
 @Component({
   selector: 'app-assignments',
@@ -38,15 +39,30 @@ export class AssignmentsComponent implements OnInit {
   nextPageNonRendu: number;
   loading = false;
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event) {
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      transferArrayItem(event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex);
+      const assignment = event.item.data;
+      if(assignment.rendu) {
+        assignment.rendu = false;
+        this.service.updateAssignment(assignment).subscribe(message => {
+          this.loggingService.notifier("Assignment non rendu");
+          this.loadData();
+        });
+      } else {
+          const dialogRef = this.dialog.open(NoteAssignmentComponent, {
+            width: '250px',
+            data: assignment
+          });
+      
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+            if(result.event === 'noted') this.loadData();
+          });
+      }
     }
+
+    
   }
 
   constructor(
@@ -55,7 +71,8 @@ export class AssignmentsComponent implements OnInit {
     private router: Router,
     private ngZone: NgZone,
     public dialog: MatDialog,
-    private loggingService: LoggingService
+    private loggingService: LoggingService,
+    private service: AssignmentsService,
   ) { }
 
   ngOnInit(): void {

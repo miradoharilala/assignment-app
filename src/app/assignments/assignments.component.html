@@ -4,7 +4,7 @@
 
         <cdk-virtual-scroll-viewport #scrollerNonRendus itemSize="50" class="example-list">
             <div cdkDropList [cdkDropListData]="assignmentsNonRendus" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsNonRendus" cdkDrag>
+                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsNonRendus" cdkDrag [cdkDragData]="assignment">
                     <mat-card class="example-card">
                         <div class="flex-container">
 
@@ -54,7 +54,7 @@
 
         <cdk-virtual-scroll-viewport #scrollerRendus itemSize="50" class="example-list">
             <div cdkDropList [cdkDropListData]="assignmentsRendus" (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsRendus" cdkDrag>
+                <div class="example-box" *cdkVirtualFor="let assignment of assignmentsRendus" cdkDrag [cdkDragData]="assignment">
                     <mat-card class="example-card">
                         <div class="flex-container">
 
