@@ -6,9 +6,9 @@ C'est une web app qui permet de gérer les assignments.
 Liste des fonctionnalités:
 
 Login
-    Authentification par email et mot de passe
-    Création de token valable pendant 24 heures
-    Les utilisateurs non authentifiés ne peuvent pas accéder à la liste des assignments
+    - Authentification par email et mot de passe
+    - Création de token valable pendant 24 heures
+    - Les utilisateurs non authentifiés ne peuvent pas accéder à la liste des assignments
 
 Logout
     Suppression de token
