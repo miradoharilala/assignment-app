@@ -1,4 +1,4 @@
-<div class="col-md-6 offset-md-3 mt-5">
+<!-- <div class="col-md-6 offset-md-3 mt-5">
     <div class="card">
         <h4 class="card-header">Login</h4>
         <div class="card-body">
@@ -25,4 +25,37 @@
             </form>
         </div>
     </div>
+</div> -->
+
+<div #body  style="padding: 200px 0;">
+    <mat-card>
+        <mat-card-title><h2>Se connecter</h2></mat-card-title>
+        <mat-card-content class="add-container">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="example-form">
+                <span class="flex-container">
+                <mat-form-field class="example-full-width" [style.width.px]=500>
+                  <mat-label>Email</mat-label>
+                  <input style="width: 200px;" formControlName="email" matInput placeholder="Entrez votre adresse mail" type="text">
+                  <mat-error *ngIf="submitted && f.email.errors">Email est requis</mat-error>
+                </mat-form-field></span>
+              
+                <span class="flex-container">
+                <mat-form-field class="example-full-width" [style.width.px]=500>
+                    <mat-label>Mot de passe</mat-label>
+                    <input formControlName="motdepasse" matInput placeholder="Entrez votre mot de passe" type="password">
+                    <mat-error *ngIf="submitted && f.motdepasse.errors">Mot de passe est requis</mat-error>
+                  </mat-form-field></span>
+            
+                  <span class="flex-container" style="text-align: right;">
+                  <button [disabled]="loading" mat-stroked-button>
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Se connecter
+                </button></span>
+                <span class="flex-container">
+                    <br>
+                    <div *ngIf="error"><p  style="color: red;">{{ error.message }}</p></div>
+                </span>
+              </form>
+        </mat-card-content>
+    </mat-card>
 </div>

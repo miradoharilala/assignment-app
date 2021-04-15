@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationService } from './authentification.service';
-import { Utilisateurs } from './utilisateur';
+import { Utilisateur } from 'src/app/shared/utilisateur.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,12 +11,14 @@ import { Utilisateurs } from './utilisateur';
 })
 export class AppComponent {
   // title = 'assignment';
-  utilisateur: Utilisateurs;
+  isLoggedIn$: Observable<Utilisateur>;
+  utilisateur: Utilisateur;
 
     constructor(
         private router: Router,
         private authenticationService: AuthentificationService
     ) {
+      this.isLoggedIn$ = this.authenticationService.currentUser;
         this.authenticationService.currentUser.subscribe(x => this.utilisateur = x);
     }
 

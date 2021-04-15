@@ -36,12 +36,11 @@ import { JwtInterceptor } from '@auth0/angular-jwt';
 
 
 import { NoteAssignmentComponent } from './assignments/note-assignment/note-assignment.component';
-
-
+import { AuthGuard } from './shared/auth.guard';
 
 
 const routes: Routes = [
-  {path: '', component: AssignmentsComponent},
+  {path: '', component: AssignmentsComponent, canActivate: [AuthGuard]},
   {
     // idem avec  http://localhost:4200/home
     path:"home",
@@ -49,20 +48,24 @@ const routes: Routes = [
   },
   {
     path:"add",
-    component:AddAssignmentComponent
+    component:AddAssignmentComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path:"assignment/:id",
-    component:AssignmentDetailComponent
+    component:AssignmentDetailComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path:"assignment/:id/edit",
-    component: EditAssignmentComponent
+    component: EditAssignmentComponent,
+    // canActivate: [AuthGuard]
   },
   {
     path:"login",
     component: LoginComponent
-  }
+  },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -98,12 +101,10 @@ const routes: Routes = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [
-    MatDatepickerModule,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    MatDatepickerModule
 
   ],
   bootstrap: [AppComponent]

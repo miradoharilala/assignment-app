@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
     submitted = false;
-    error = '';
+    error: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.getUtilisateur) { 
-            this.router.navigate(['/']);
+            this.router.navigate(['/home']);
         }
     }
 
@@ -48,8 +48,8 @@ export class LoginComponent implements OnInit {
             .subscribe({
                 next: () => {
                     // get return url from route parameters or default to '/'
-                    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigate([returnUrl]);
+                    // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                    this.router.navigate(['/home']);
                 },
                 error: error => {
                     this.error = error;
