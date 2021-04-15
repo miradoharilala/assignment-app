@@ -38,8 +38,8 @@ C'est une web app qui permet de gérer les assignments.
 - Cette plateforme est déployée sur heroku et est accessible à partir des liens suivants:
 
 - **Informations de base pour le login:**
-**- email: diamondraratovondrainy@gmail.com**
-**- motdepasse : diamondra**
+  - **email: diamondraratovondrainy@gmail.com**
+  - **motdepasse : diamondra**
     
 - Front end:
     https://assignment-app-front.herokuapp.com/
