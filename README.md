@@ -23,21 +23,21 @@ C'est une web app qui permet de gérer les assignments.
 
 - Sécurisation des URLs
 
-*API REST*
-    - Liste des assignments
-    - Ajout d'un assignment
-    - Modification d'un assignment
-    - Suppression d'un assignment
-    - Création d'un utilisateur 
-    - Login d'un utilisateur
-    - Déconnexion d'un utilisateur
-    - Détail d'un assignment
+- *API REST*
+  - Liste des assignments
+  - Ajout d'un assignment
+  - Modification d'un assignment
+  - Suppression d'un assignment
+  - Création d'un utilisateur 
+  - Login d'un utilisateur
+  - Déconnexion d'un utilisateur
+  - Détail d'un assignment
 
-*Base de données:* Nous avons utilisé MongoDB pour la gestion des données. Nous avons utilisé les services de mongodb.com
+- **Base de données:** Nous avons utilisé MongoDB pour la gestion des données. Nous avons utilisé les services de mongodb.com
 
-Cette plateforme est déployée sur heroku et est accessible à partir des liens suivants:
+- Cette plateforme est déployée sur heroku et est accessible à partir des liens suivants:
 
-**Informations de base pour le login:**
+- **Informations de base pour le login:**
 **- email: diamondraratovondrainy@gmail.com**
 **- motdepasse : diamondra**
     
@@ -51,7 +51,7 @@ Cette plateforme est déployée sur heroku et est accessible à partir des liens
     - http://assignment-app-api.herokuapp.com/api/eleves
     - http://assignment-app-api.herokuapp.com/api/assignments/{id}
 
-Pour une utilisation locale, voici les instructions:
+- Pour une utilisation locale, voici les instructions:
 
 - Il faut installer au préalable:
     - Télecharger https://nodejs.org/en/download/ et installer
