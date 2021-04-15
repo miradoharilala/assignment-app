@@ -32,6 +32,10 @@ API REST
 Base de données: Nous avons utilisé MongoDB pour la gestion des données. Nous avons utilisé les services de mongodb.com
 
 Cette plateforme est déployée sur heroku et est accessible à partir des liens suivants: 
+Informations de base pour le login:
+    email: diamondraratovondrainy@gmail.com
+    motdepasse : diamondra
+    
 Front end:
     https://assignment-app-front.herokuapp.com/
 
