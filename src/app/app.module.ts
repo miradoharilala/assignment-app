@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NoteAssignmentComponent } from './assignments/note-assignment/note-assignment.component';
 
 
 
@@ -60,7 +61,8 @@ const routes: Routes = [
     AssignmentsComponent,
     AddAssignmentComponent,
     EditAssignmentComponent,
-    AssignmentDetailComponent
+    AssignmentDetailComponent,
+    NoteAssignmentComponent
   ],
   imports: [
     BrowserModule,
