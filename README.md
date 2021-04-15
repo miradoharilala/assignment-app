@@ -1,5 +1,5 @@
 # assignment-app
-*Liste des assignments - Groupe 29*
+**Liste des assignments - Groupe 29**
 
 C'est une web app qui permet de gérer les assignments.
 
@@ -53,7 +53,7 @@ Cette plateforme est déployée sur heroku et est accessible à partir des liens
 
 Pour une utilisation locale, voici les instructions:
 
-Il faut installer au préalable:
+- Il faut installer au préalable:
     - Télecharger https://nodejs.org/en/download/ et installer
     - Installer angular: ouvrir l'invite de commandes et lancer npm install -g @angular/cli
 
@@ -74,12 +74,12 @@ Il faut installer au préalable:
 La plateforme s'ouvrira dans le navigateur: http://localhost/4200/
 
 Les webservices:
-    - http://localhost/8010/api/assignments
-    - http://localhost/8010/utilisateurs
-    - http://localhost/8010/matieres
-    - http://localhost/8010/api/eleves
-    - http://localhost/8010/api/assignments/{id}
-    - http://localhost/8010/api/authentification
+- http://localhost/8010/api/assignments
+- http://localhost/8010/utilisateurs
+- http://localhost/8010/matieres
+- http://localhost/8010/api/eleves
+- http://localhost/8010/api/assignments/{id}
+- http://localhost/8010/api/authentification
 
 Améliorations qu'on pourrait ajouter à l'avenir: 
 - Gestion des matières, des professeurs et des élèves
