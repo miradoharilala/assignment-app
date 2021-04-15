@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthentificationService } from './authentification.service';
+import { AuthenticationService } from './shared/authentication.service';
 import { Utilisateur } from 'src/app/shared/utilisateur.model';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class AppComponent {
 
     constructor(
         private router: Router,
-        private authenticationService: AuthentificationService
+        private authenticationService: AuthenticationService
     ) {
       this.isLoggedIn$ = this.authenticationService.currentUser;
         this.authenticationService.currentUser.subscribe(x => this.utilisateur = x);

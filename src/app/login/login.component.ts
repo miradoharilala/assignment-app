@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AuthentificationService } from '../authentification.service';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -16,10 +16,10 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthentificationService
+        private authenticationService: AuthenticationService
     ) { 
         // redirect to home if already logged in
-        if (this.authenticationService.getUtilisateur) { 
+        if (this.authenticationService.currentUserValue) { 
             this.router.navigate(['/home']);
         }
     }
@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit {
                 next: () => {
                     // get return url from route parameters or default to '/'
                     // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-                    this.router.navigate(['/home']);
+                    // const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+                    const returnUrl = '/';
+                    this.router.navigate([returnUrl]);
                 },
                 error: error => {
                     this.error = error;
