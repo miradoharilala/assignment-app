@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -60,7 +61,8 @@ const routes: Routes = [
     AssignmentsComponent,
     AddAssignmentComponent,
     EditAssignmentComponent,
-    AssignmentDetailComponent
+    AssignmentDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -87,7 +89,9 @@ const routes: Routes = [
     MatCheckboxModule,
     MatSnackBarModule
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule
+  ],
   bootstrap: [AppComponent]
 })
 
